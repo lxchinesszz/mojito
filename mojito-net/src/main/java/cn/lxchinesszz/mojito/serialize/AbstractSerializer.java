@@ -16,7 +16,7 @@ public abstract class AbstractSerializer implements Serializer {
     @Override
     public byte[] serialize(Object dataObject) throws SerializeException {
         if (!(dataObject instanceof Serializable)) {
-            throw new SerializeException(MessageFormat.format("{},未实现java.io.Serializable接口", dataObject));
+            throw new SerializeException(MessageFormat.format("{0},未实现java.io.Serializable接口", dataObject));
         }
         return doSerialize(dataObject);
     }
