@@ -100,19 +100,22 @@ class ChannelDecoderTest {
     @DisplayName("b报文")
     void lengthFieldBasedFrameDecoder() {
         ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer();
-        buffer.writeShort(11);
-        buffer.writeInt(20);
-        buffer.writeByte(2);
-        buffer.writeBytes("hello world".getBytes(StandardCharsets.UTF_8));
-        // 最大长度
+        byte[] bytes = "hello world".getBytes(StandardCharsets.UTF_8);
+        System.out.println(bytes.length);
+        // 4字节
+        buffer.writeInt(bytes.length);
+        // 真正的数据
+        buffer.writeBytes(bytes);
+        // 最大包长100字节
         int maxFrameLength = 100;
-        // 长度偏移位
-        int lengthOffset = 2;
-        // 长度字段的数据长度
-        int lengthFieldLength = 4;
-        //
+        // 从0开始,说明开头就是长度
+        int lengthFieldOffset = 0;
+        // 0 说明, 报文是有长度+真实数据组成的,没有其他的东西
+        int lengthAdjustment = 0;
+        // 跳过长度的字节，因为是int,所以是4字节
+        int initialBytesToStrip = 4;
         EmbeddedChannel channel = new EmbeddedChannel(new LoggingHandler(LogLevel.DEBUG),
-                new LengthFieldBasedFrameDecoder(100, 2, 4, -8, 7),
+                new LengthFieldBasedFrameDecoder(maxFrameLength, lengthFieldOffset, 4, lengthAdjustment, initialBytesToStrip),
                 new ChannelInboundHandlerAdapter() {
                     @Override
                     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {

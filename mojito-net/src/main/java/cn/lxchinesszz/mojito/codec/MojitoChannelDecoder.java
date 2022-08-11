@@ -63,7 +63,8 @@ public class MojitoChannelDecoder extends ChannelDecoder {
                     // 满足读取数据
                     byte[] dataArr = new byte[dataSize];
                     inByteBuf.readBytes(dataArr, 0, dataSize);
-                    //找到序列化器,性能有提升空间,可以序列化器可以进行池化
+                    // 找到序列化器,性能有提升空间,可以序列化器可以进行池化
+                    // Protostuff 必须根据class进行转换,所以这里也要优化
                     SerializeEnum serializeEnum = SerializeEnum.ofByType(serializationType);
                     Class<? extends Serializer> serialize = serializeEnum.getSerialize();
                     Serializer serializerNewInstance = (Serializer) serialize.newInstance();
