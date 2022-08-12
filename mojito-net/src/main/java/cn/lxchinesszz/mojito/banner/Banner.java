@@ -12,6 +12,7 @@ import java.net.URLConnection;
 import java.security.CodeSource;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
+
 import static com.hanframework.kit.text.Ansi.ansi;
 
 /**
@@ -20,9 +21,10 @@ import static com.hanframework.kit.text.Ansi.ansi;
  */
 public final class Banner {
 
-    private static final String name = "Mojito";
+    private static final String NAME = "Mojito";
 
-    private static final String defaultBanner = " ___      ___     ______      ___  __  ___________  ______    \n" +
+
+    private static final String DEFAULT_BANNER = " ___      ___     ______      ___  __  ___________  ______    \n" +
             "|\"  \\    /\"  |   /    \" \\    |\"  ||\" \\(\"     _   \")/    \" \\   \n" +
             " \\   \\  //   |  // ____  \\   ||  |||  |)__/  \\\\__/// ____  \\  \n" +
             " /\\\\  \\/.    | /  /    ) :)  |:  ||:  |   \\\\_ /  /  /    ) :) \n" +
@@ -45,16 +47,23 @@ public final class Banner {
         String version = Banner.getVersion();
         version = version != null ? " (v" + version + ")" : "";
         StringBuilder padding = new StringBuilder();
-
-        while (padding.length() < 42 - (version.length() + name.length())) {
+        while (padding.length() < 42 - (version.length() + NAME.length())) {
             padding.append(" ");
         }
-        printStream.println(print(defaultBanner, Ansi.Color.RED));
+        printStream.println(print(DEFAULT_BANNER, Ansi.Color.GREEN));
         printStream.println();
-        printStream.println(print(" :: Mojito :: " + version, Ansi.Color.RED));
+        printStream.println(print(" :: Tomato :: " + padding, Ansi.Color.GREEN));
+        printStream.println();
+        printStream.println(print("麻烦给我的爱人来一杯Mojito,我喜欢阅读她微醺时的眼眸！", Ansi.Color.GREEN));
         printStream.println();
     }
 
+
+    /**
+     * 获取组件版本号
+     *
+     * @return String
+     */
     private static String getVersion() {
         String implementationVersion = Banner.class.getPackage().getImplementationVersion();
         if (implementationVersion != null) {

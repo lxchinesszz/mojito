@@ -97,10 +97,11 @@ class ChannelDecoderTest {
     }
 
     @Test
-    @DisplayName("b报文")
+    @DisplayName("动态获取长度报文")
     void lengthFieldBasedFrameDecoder() {
         ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer();
         byte[] bytes = "hello world".getBytes(StandardCharsets.UTF_8);
+        // 11
         System.out.println(bytes.length);
         // 4字节
         buffer.writeInt(bytes.length);

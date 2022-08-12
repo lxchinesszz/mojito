@@ -5,6 +5,8 @@ import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
 
 /**
  * @author liuxin
+ * 个人博客：https://java.springlearn.cn
+ * 公众号：西魏陶渊明  ｛关注获取学习源码｝
  * 2022/8/5 23:12
  */
 public interface ConfigurableClient<REQ extends ProtocolHeader, RES extends ProtocolHeader, T extends Client<REQ, RES>> {
@@ -37,6 +39,11 @@ public interface ConfigurableClient<REQ extends ProtocolHeader, RES extends Prot
      */
     void initializer(ClientInitializer initializer);
 
+    /**
+     * 客户端初始化扩展
+     *
+     * @return ClientInitializer
+     */
     ClientInitializer<Client<REQ, RES>> getClientInitializer();
 
 }

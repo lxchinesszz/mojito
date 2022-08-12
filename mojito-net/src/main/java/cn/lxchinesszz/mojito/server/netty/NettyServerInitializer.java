@@ -28,7 +28,7 @@ public class NettyServerInitializer implements ServerInitializer<NettyServer> {
             protected void initChannel(SocketChannel socketChannel) throws Exception {
                 ChannelPipeline cp = socketChannel.pipeline();
                 // 1. 添加心跳检查(5s没有反应就自动关闭连接)
-//                cp.addLast("idleStateHandler", new IdleStateHandler(5, 5, 5, TimeUnit.SECONDS));
+                cp.addLast("idleStateHandler", new IdleStateHandler(5, 5, 5, TimeUnit.SECONDS));
                 // 2. 请求解码器
                 cp.addLast(protocol.getRequestDecoder());
                 // 3. 业务转发器（NettyAPI 转自定义API）

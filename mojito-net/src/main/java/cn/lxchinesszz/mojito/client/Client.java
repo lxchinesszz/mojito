@@ -3,9 +3,13 @@ package cn.lxchinesszz.mojito.client;
 import cn.lxchinesszz.mojito.future.MojitoFuture;
 import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * @author liuxin
- * 2022/8/9 20:41
+ * 个人博客：https://java.springlearn.cn
+ * 公众号：西魏陶渊明  ｛关注获取学习源码｝
+ * 2022/8/5 23:12
  */
 public interface Client<REQ extends ProtocolHeader, RES extends ProtocolHeader> extends ConfigurableClient<REQ, RES, Client<REQ, RES>> {
 
@@ -24,7 +28,9 @@ public interface Client<REQ extends ProtocolHeader, RES extends ProtocolHeader> 
      * @param req 请求体
      * @return 异步结果
      */
-    MojitoFuture<RES> send(REQ req);
+    MojitoFuture<RES> sendAsync(REQ req);
+
+    RES send(REQ req) throws InterruptedException, ExecutionException;
 
     /**
      * 关闭连接

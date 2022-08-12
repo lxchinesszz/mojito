@@ -1,15 +1,20 @@
 package cn.lxchinesszz.mojito.client;
 
+import cn.lxchinesszz.mojito.exception.RemotingException;
 import cn.lxchinesszz.mojito.future.MojitoFuture;
 import cn.lxchinesszz.mojito.protocol.Protocol;
 import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
 import com.hanframework.kit.thread.ThreadHookTools;
 
+import java.net.ConnectException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author liuxin
- * 2022/8/10 23:32
+ * 个人博客：https://java.springlearn.cn
+ * 公众号：西魏陶渊明  ｛关注获取学习源码｝
+ * 2022/8/5 23:12
  */
 public abstract class AbstractClient<REQ extends ProtocolHeader, RES extends ProtocolHeader> implements Client<REQ, RES> {
 
@@ -41,14 +46,19 @@ public abstract class AbstractClient<REQ extends ProtocolHeader, RES extends Pro
                 doConnect();
             }
         } catch (Throwable t) {
-            t.printStackTrace();
             running.compareAndSet(true, false);
+            throw new RemotingException("服务端连接异常",t);
         }
     }
 
     @Override
-    public MojitoFuture<RES> send(REQ req) {
+    public MojitoFuture<RES> sendAsync(REQ req) {
         return doSend(req);
+    }
+
+    @Override
+    public RES send(REQ req) throws InterruptedException, ExecutionException {
+        return sendAsync(req).get();
     }
 
     @Override

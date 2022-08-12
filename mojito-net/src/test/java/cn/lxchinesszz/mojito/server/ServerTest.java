@@ -172,13 +172,13 @@ public class ServerTest {
     }
 
     @Test
-    public void client() throws Exception{
+    public void client() throws Exception {
         Client<RpcRequest, RpcResponse> client = new NettyClient<>();
         client.registryProtocol(new MojitoProtocol(null));
         client.initializer(new NettyClientInitializer());
         client.connect("127.0.0.1", 6666);
         RpcRequest rpcRequest = new RpcRequest();
-        MojitoFuture<RpcResponse> send = client.send(rpcRequest);
+        MojitoFuture<RpcResponse> send = client.sendAsync(rpcRequest);
         send.addListeners(new MojitoListener<RpcResponse>() {
             @Override
             public void onSuccess(RpcResponse result) {

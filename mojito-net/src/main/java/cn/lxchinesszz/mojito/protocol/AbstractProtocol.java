@@ -13,9 +13,14 @@ public abstract class AbstractProtocol<R extends ProtocolHeader, V extends Proto
 
     private final TypeParameterMatcher matcher;
 
-    private final BusinessHandler<R, V> businessHandler;
+    private BusinessHandler<R, V> businessHandler;
 
-    private final ClientPromiseHandler<R,V> clientPromiseHandler;
+    private final ClientPromiseHandler<R, V> clientPromiseHandler;
+
+    public AbstractProtocol() {
+        this.matcher = TypeParameterMatcher.find(this, AbstractProtocol.class, "R");
+        this.clientPromiseHandler = new DefaultClientPromiseHandler<>();
+    }
 
     public AbstractProtocol(BusinessHandler<R, V> businessHandler) {
         this.businessHandler = businessHandler;
@@ -23,6 +28,9 @@ public abstract class AbstractProtocol<R extends ProtocolHeader, V extends Proto
         this.clientPromiseHandler = new DefaultClientPromiseHandler<>();
     }
 
+    public void setBusinessHandler(BusinessHandler<R, V> businessHandler) {
+        this.businessHandler = businessHandler;
+    }
 
     public BusinessHandler<R, V> getBusinessHandler() {
         return businessHandler;

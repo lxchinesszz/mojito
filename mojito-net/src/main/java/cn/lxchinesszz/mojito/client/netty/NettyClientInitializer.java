@@ -13,9 +13,12 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 import java.util.concurrent.TimeUnit;
 
+
 /**
  * @author liuxin
- * 2022/8/6 14:10
+ * 个人博客：https://java.springlearn.cn
+ * 公众号：西魏陶渊明  ｛关注获取学习源码｝
+ * 2022/8/5 23:12
  */
 public class NettyClientInitializer implements ClientInitializer<NettyClient<ProtocolHeader, ProtocolHeader>> {
 
@@ -30,7 +33,7 @@ public class NettyClientInitializer implements ClientInitializer<NettyClient<Pro
             protected void initChannel(SocketChannel ch) throws Exception {
                 ChannelPipeline cp = ch.pipeline();
                 // 1. 添加心跳检查(5s没有反应就自动关闭连接)
-//                cp.addLast("idleStateHandler", new IdleStateHandler(5, 5, 5, TimeUnit.SECONDS));
+                cp.addLast("idleStateHandler", new IdleStateHandler(5, 5, 5, TimeUnit.SECONDS));
                 cp.addLast(protocol.getRequestDecoder());
                 cp.addLast(protocol.getResponseEncoder());
                 // 3. 业务转发器（NettyAPI 转自定义API）

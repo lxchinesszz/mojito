@@ -17,7 +17,9 @@ import java.util.Objects;
 
 /**
  * @author liuxin
- * 2022/8/10 23:34
+ * 个人博客：https://java.springlearn.cn
+ * 公众号：西魏陶渊明  ｛关注获取学习源码｝
+ * 2022/8/5 23:12
  */
 @Slf4j
 public class NettyClient<REQ extends ProtocolHeader, RES extends ProtocolHeader> extends AbstractClient<REQ, RES> {

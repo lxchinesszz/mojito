@@ -54,7 +54,7 @@ public class NettyServer extends AbstractServer<NettyServer> {
         // 3. 阻塞绑定端口
         ChannelFuture bindFuture = serverBootstrap.bind().addListener((ChannelFutureListener) channelFuture -> {
             if (channelFuture.isSuccess()) {
-                log.info(Banner.print("麻烦给我的爱人来一杯Mojito,我喜欢阅读她微醺时的眼眸！", Ansi.Color.RED));
+                Banner.print();
                 log.info("Mojito启动成功,端口号:" + port);
             } else {
                 Throwable cause = channelFuture.cause();

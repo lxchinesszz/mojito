@@ -45,9 +45,11 @@ public interface Protocol<R extends ProtocolHeader, V extends ProtocolHeader> {
      */
     ChannelEncoder<?> getResponseEncoder();
 
+    void setBusinessHandler(BusinessHandler<R, V> businessHandler);
+
     BusinessHandler<R, V> getBusinessHandler();
 
-    ClientPromiseHandler<R,V> getClientPromiseHandler();
+    ClientPromiseHandler<R, V> getClientPromiseHandler();
 
     boolean acceptInboundMessage(Object msg);
 
