@@ -2,7 +2,7 @@ package cn.lxchinesszz.mojito.server.netty;
 
 import cn.lxchinesszz.mojito.channel.DefaultEnhanceChannel;
 import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
-import cn.lxchinesszz.mojito.server.ExchangeChannelHandler;
+import cn.lxchinesszz.mojito.exchange.ExchangeChannelHandler;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;

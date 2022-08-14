@@ -14,7 +14,12 @@ import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
 import cn.lxchinesszz.mojito.server.Server;
 import cn.lxchinesszz.mojito.server.netty.NettyServer;
 import cn.lxchinesszz.mojito.server.netty.NettyServerInitializer;
+import io.netty.util.internal.SocketUtils;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 /**
@@ -156,6 +161,8 @@ public class Mojito<REQ extends ProtocolHeader, RES extends ProtocolHeader> {
 
         private final Mojito<REQ, RES> config;
 
+        private final Map<SocketAddress, Client<REQ, RES>> clientCache = new HashMap<>();
+
         private ClientCreator(Mojito<REQ, RES> serverConfig) {
             this.config = serverConfig;
         }
@@ -165,9 +172,15 @@ public class Mojito<REQ extends ProtocolHeader, RES extends ProtocolHeader> {
         }
 
         public Client<REQ, RES> connect(String remoteHost, int remotePort) throws Exception {
-            Client<REQ, RES> client = config.getCodecFactory().getClient(remoteHost, remotePort);
-            client.connect(remoteHost, remotePort);
-            return client;
+            InetSocketAddress inetSocketAddress = SocketUtils.socketAddress(remoteHost, remotePort);
+            if (clientCache.containsKey(inetSocketAddress)) {
+                return clientCache.get(inetSocketAddress);
+            } else {
+                Client<REQ, RES> client = config.getCodecFactory().getClient(remoteHost, remotePort);
+                client.connect(remoteHost, remotePort);
+                clientCache.put(inetSocketAddress, client);
+                return client;
+            }
         }
 
     }

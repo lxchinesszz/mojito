@@ -2,6 +2,7 @@ package cn.lxchinesszz.mojito.server;
 
 import cn.lxchinesszz.mojito.channel.EnhanceChannel;
 import cn.lxchinesszz.mojito.exception.RemotingException;
+import cn.lxchinesszz.mojito.exchange.ExchangeChannelHandler;
 import cn.lxchinesszz.mojito.protocol.Protocol;
 import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
 

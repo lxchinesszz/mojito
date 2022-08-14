@@ -5,6 +5,7 @@ import cn.lxchinesszz.mojito.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 import java.net.SocketAddress;
 import java.util.List;

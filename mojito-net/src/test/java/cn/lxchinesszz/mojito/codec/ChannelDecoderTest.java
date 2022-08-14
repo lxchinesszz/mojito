@@ -145,7 +145,57 @@ class ChannelDecoderTest {
         buffer.writeInt(data.length);
         //5. 写入报文内容(数组)
         buffer.writeBytes(data);
+
+
+        //1. 获取协议类型(1个字节)
+        buffer.writeByte(rpcRequest.getProtocolType());
+        //2. 获取序列化类型(1个字节)
+        buffer.writeByte(rpcRequest.getSerializationType());
+        //3. 根据序列化类型找到数据转换器生成二进制数据
+        //4. 写入报文长度(4个字节)
+        buffer.writeInt(data.length);
+        //5. 写入报文内容(数组)
+        buffer.writeBytes(data);
         return buffer;
+    }
+
+    @Test
+    @DisplayName("采用LengthFieldBasedFrameDecoder来解决拆包和黏包")
+    public void testMojito2ChannelDecode() throws Exception {
+        // 最大包长100字节
+        int maxFrameLength = 10000;
+        // 从0开始,说明开头就是长度
+        int lengthFieldOffset = 2;
+        // 0 说明, 报文是有长度+真实数据组成的,没有其他的东西
+        int lengthAdjustment = 0;
+        // 跳过长度的字节，因为是int,所以是4字节
+        int initialBytesToStrip = 0;
+        EmbeddedChannel channel = new EmbeddedChannel(new LoggingHandler(LogLevel.DEBUG),
+                new LengthFieldBasedFrameDecoder(maxFrameLength, lengthFieldOffset, 4, lengthAdjustment, initialBytesToStrip),
+                new ChannelInboundHandlerAdapter() {
+                    @Override
+                    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                        ByteBuf inByteBuf = (ByteBuf) msg;
+                        // 协议类型
+                        System.out.println("protocolType:" + inByteBuf.readByte());
+                        // 序列化类型
+                        byte serializationType = inByteBuf.readByte();
+                        System.out.println("serializationType:" + serializationType);
+                        // 数据长度
+                        int dataSize = inByteBuf.readInt();
+                        System.out.println("dataSize:" + dataSize);
+                        byte[] dataArr = new byte[dataSize];
+                        inByteBuf.readBytes(dataArr, 0, dataSize);
+
+                        SerializeEnum serializeEnum = SerializeEnum.ofByType(serializationType);
+                        Class<? extends Serializer> serialize = serializeEnum.getSerialize();
+                        Serializer serializerNewInstance = (Serializer) serialize.newInstance();
+                        //根据类型获取序列化器
+                        Object deserialize = serializerNewInstance.deserialize(dataArr);
+                        System.out.println(deserialize);
+                    }
+                });
+        channel.writeInbound(ByteBufAllocator.DEFAULT.buffer().writeBytes(fillProtocol()));
     }
 
     @Test

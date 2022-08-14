@@ -1,12 +1,14 @@
 package cn.lxchinesszz.mojito.server.netty;
 
 import cn.lxchinesszz.mojito.channel.DefaultEnhanceChannel;
-import cn.lxchinesszz.mojito.server.ExchangeChannelHandler;
+import cn.lxchinesszz.mojito.exchange.ExchangeChannelHandler;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 
 /**
@@ -27,6 +29,8 @@ public class NettySharableExchangeInboundHandler extends SimpleChannelInboundHan
 
     private final ExchangeChannelHandler exchangeChannelHandler;
 
+    private final AtomicLong count = new AtomicLong(0);
+
     public NettySharableExchangeInboundHandler(ExchangeChannelHandler exchangeChannelHandler) {
         this.exchangeChannelHandler = exchangeChannelHandler;
     }
@@ -41,7 +45,7 @@ public class NettySharableExchangeInboundHandler extends SimpleChannelInboundHan
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         DefaultEnhanceChannel channel = DefaultEnhanceChannel.getOrAddChannel(ctx.channel());
         try {
-            System.out.println("Sharable:"+ this.hashCode());
+            System.out.println(count.incrementAndGet());
             exchangeChannelHandler.connected(channel);
         } finally {
             //连接断开就移除
@@ -61,6 +65,7 @@ public class NettySharableExchangeInboundHandler extends SimpleChannelInboundHan
         DefaultEnhanceChannel channel = DefaultEnhanceChannel.getOrAddChannel(ctx.channel());
         try {
             exchangeChannelHandler.disconnected(channel);
+//            count.decrementAndGet();
         } finally {
             DefaultEnhanceChannel.removeChannelIfDisconnected(ctx.channel());
         }

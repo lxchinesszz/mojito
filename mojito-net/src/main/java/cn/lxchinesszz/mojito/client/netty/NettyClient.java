@@ -4,10 +4,13 @@ import cn.lxchinesszz.mojito.channel.DefaultEnhanceChannel;
 import cn.lxchinesszz.mojito.client.AbstractClient;
 import cn.lxchinesszz.mojito.future.MojitoFuture;
 import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
+import cn.lxchinesszz.mojito.task.AbstractHandlerTask;
+import cn.lxchinesszz.mojito.utils.OSinfo;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.epoll.EpollSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.SneakyThrows;
@@ -31,10 +34,9 @@ public class NettyClient<REQ extends ProtocolHeader, RES extends ProtocolHeader>
     private DefaultEnhanceChannel enhanceChannel;
 
     @Override
-    @SneakyThrows
-    public void doConnect() {
+    public void doConnect() throws Throwable {
         clientBootstrap.group(workerGroup);
-        clientBootstrap.channel(NioSocketChannel.class);
+        clientBootstrap.channel(OSinfo.isLinux() ? EpollSocketChannel.class : NioSocketChannel.class);
         clientBootstrap.option(ChannelOption.TCP_NODELAY, false);
         getClientInitializer().initializer(this);
         ChannelFuture channelFuture = clientBootstrap.connect(getRemoteHost(), getRemotePort()).sync();
@@ -55,6 +57,8 @@ public class NettyClient<REQ extends ProtocolHeader, RES extends ProtocolHeader>
     @Override
     public MojitoFuture<RES> doSend(REQ req) {
         // 这里我们也设置,断线重连,后面优化
+        // 默认都使用长连接
+        req.getAttachments().put(AbstractHandlerTask.KEEPALIVE, "true");
         return getProtocol().getClientPromiseHandler().sendAsync(enhanceChannel, req);
     }
 

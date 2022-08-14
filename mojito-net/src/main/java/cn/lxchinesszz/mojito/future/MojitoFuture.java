@@ -86,8 +86,8 @@ public class MojitoFuture<V> implements Promise<V>, Future<V> {
         try {
             lock.lock();
             updateSuccess = setValue0(data);
-            condition.signalAll();
-            timeoutCondition.signalAll();
+            condition.signal();
+            timeoutCondition.signal();
         } finally {
             lock.unlock();
         }

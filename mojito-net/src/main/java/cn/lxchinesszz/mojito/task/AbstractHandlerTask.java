@@ -68,9 +68,12 @@ public abstract class AbstractHandlerTask<R extends ProtocolHeader, V extends Pr
             // 服务端也可以对通道进行写,但是写完之后要将标记置位不可写。否则这里会在写一次
             EnhanceChannel enhanceChannel = getEnhanceChannel();
             if (enhanceChannel.isWrite()) {
+                // 默认都是长连接
                 if (keepAlive()) {
                     enhanceChannel.send(v);
+                    System.out.println("服务端发送数据");
                 } else {
+                    System.out.println("服务端发送数据并关闭");
                     enhanceChannel.sendAndClose(v);
                 }
             } else {

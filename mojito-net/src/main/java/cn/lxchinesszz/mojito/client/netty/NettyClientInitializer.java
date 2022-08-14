@@ -3,7 +3,7 @@ package cn.lxchinesszz.mojito.client.netty;
 import cn.lxchinesszz.mojito.client.ClientInitializer;
 import cn.lxchinesszz.mojito.protocol.Protocol;
 import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
-import cn.lxchinesszz.mojito.server.DefaultExchangeChannelHandler;
+import cn.lxchinesszz.mojito.exchange.DefaultExchangeChannelHandler;
 import cn.lxchinesszz.mojito.server.netty.NettySharableExchangeInboundHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -33,7 +33,7 @@ public class NettyClientInitializer implements ClientInitializer<NettyClient<Pro
             protected void initChannel(SocketChannel ch) throws Exception {
                 ChannelPipeline cp = ch.pipeline();
                 // 1. 添加心跳检查(5s没有反应就自动关闭连接)
-                cp.addLast("idleStateHandler", new IdleStateHandler(5, 5, 5, TimeUnit.SECONDS));
+//                cp.addLast("idleStateHandler", new IdleStateHandler(5, 5, 5, TimeUnit.SECONDS));
                 cp.addLast(protocol.getRequestDecoder());
                 cp.addLast(protocol.getResponseEncoder());
                 // 3. 业务转发器（NettyAPI 转自定义API）

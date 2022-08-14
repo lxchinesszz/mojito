@@ -1,4 +1,4 @@
-package cn.lxchinesszz.mojito.server;
+package cn.lxchinesszz.mojito.exchange;
 
 import cn.lxchinesszz.mojito.channel.EnhanceChannel;
 import cn.lxchinesszz.mojito.exception.RemotingException;

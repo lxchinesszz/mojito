@@ -6,8 +6,8 @@ import cn.lxchinesszz.mojito.codec.ChannelDecoder;
 import cn.lxchinesszz.mojito.codec.ChannelEncoder;
 import cn.lxchinesszz.mojito.protocol.Protocol;
 import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
-import cn.lxchinesszz.mojito.server.DefaultExchangeChannelHandler;
-import cn.lxchinesszz.mojito.server.ExchangeChannelHandler;
+import cn.lxchinesszz.mojito.exchange.DefaultExchangeChannelHandler;
+import cn.lxchinesszz.mojito.exchange.ExchangeChannelHandler;
 
 import java.util.concurrent.Executor;
 

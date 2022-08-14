@@ -6,7 +6,6 @@ import cn.lxchinesszz.mojito.protocol.Protocol;
 import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
 import com.hanframework.kit.thread.ThreadHookTools;
 
-import java.net.ConnectException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -47,7 +46,7 @@ public abstract class AbstractClient<REQ extends ProtocolHeader, RES extends Pro
             }
         } catch (Throwable t) {
             running.compareAndSet(true, false);
-            throw new RemotingException("服务端连接异常",t);
+            throw new RemotingException("服务端连接异常", t);
         }
     }
 
@@ -105,7 +104,7 @@ public abstract class AbstractClient<REQ extends ProtocolHeader, RES extends Pro
         return clientInitializer;
     }
 
-    public abstract void doConnect();
+    public abstract void doConnect() throws Throwable;
 
     public abstract void doClose();
 

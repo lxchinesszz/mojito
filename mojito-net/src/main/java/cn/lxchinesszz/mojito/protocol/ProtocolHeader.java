@@ -1,6 +1,8 @@
 package cn.lxchinesszz.mojito.protocol;
 
 import cn.lxchinesszz.mojito.serialize.SerializeEnum;
+import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -13,6 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author liuxin
  * 2022/8/5 23:16
  */
+@ToString
 public class ProtocolHeader implements Serializable {
 
     /**
@@ -27,7 +30,7 @@ public class ProtocolHeader implements Serializable {
      *
      * @see SerializeEnum
      */
-    byte serializationType = SerializeEnum.HS2.getType();
+    byte serializationType = SerializeEnum.HS.getType();
 
     Class<?> type;
 

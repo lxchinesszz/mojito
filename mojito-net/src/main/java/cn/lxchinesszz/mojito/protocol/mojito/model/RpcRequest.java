@@ -2,6 +2,9 @@ package cn.lxchinesszz.mojito.protocol.mojito.model;
 
 import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
 import cn.lxchinesszz.mojito.serialize.Serializer;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -12,6 +15,9 @@ import java.util.Arrays;
  * @author liuxin
  * 2020-07-31 19:40
  */
+@Data
+@EqualsAndHashCode
+@ToString(callSuper = true)
 public class RpcRequest extends ProtocolHeader implements Serializable {
 
 
@@ -28,12 +34,12 @@ public class RpcRequest extends ProtocolHeader implements Serializable {
     /**
      * 参数类型
      */
-    private Class[] argsType;
+    private Class<?>[] argsType;
 
     /**
      * 返回值类型
      */
-    private Class returnType;
+    private Class<?> returnType;
 
     /**
      * 版本号
@@ -49,80 +55,4 @@ public class RpcRequest extends ProtocolHeader implements Serializable {
      * 超时时间
      */
     private long timeout;
-
-    public RpcRequest() {
-    }
-
-    public Class<?> getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(Class<?> serviceType) {
-        this.serviceType = serviceType;
-    }
-
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
-    }
-
-    public Class[] getArgsType() {
-        return argsType;
-    }
-
-    public void setArgsType(Class[] argsType) {
-        this.argsType = argsType;
-    }
-
-    public Class getReturnType() {
-        return returnType;
-    }
-
-    public void setReturnType(Class returnType) {
-        this.returnType = returnType;
-    }
-
-    public Object[] getArgs() {
-        return args;
-    }
-
-    public void setArgs(Object[] args) {
-        this.args = args;
-    }
-
-    public long getTimeout() {
-        return timeout;
-    }
-
-    public void setTimeout(long timeout) {
-        this.timeout = timeout;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    @Override
-    public String toString() {
-        return "RpcRequest{" +
-//                " id=" + id +
-//                ", protocolType=" + protocolType +
-//                ", serializationType=" + serializationType +
-//                ", type=" + type +
-                ", timeout=" + timeout +
-                ", serviceType=" + serviceType +
-                ", methodName='" + methodName + '\'' +
-                ", argsType=" + Arrays.toString(argsType) +
-                ", returnType=" + returnType +
-                ", version='" + version + '\'' +
-                ", args=" + Arrays.toString(args) +
-                '}';
-    }
 }

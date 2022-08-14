@@ -8,6 +8,7 @@ import cn.lxchinesszz.mojito.protocol.ProtocolHeader;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -33,21 +34,20 @@ public class DefaultClientPromiseHandler<REQ extends ProtocolHeader, RES extends
     @Override
     public MojitoFuture<RES> sendAsync(EnhanceChannel enhanceChannel, REQ rpcRequest) {
         MojitoFuture<RES> future = new MojitoFuture<>();
-        enhanceChannel.send(rpcRequest);
         if (ProtocolEnum.MQ_REG == ProtocolEnum.byType(rpcRequest.getProtocolType())) {
             messageList.add(future);
             futureMap.put(rpcRequest.getId(), future);
         } else {
             futureMap.put(rpcRequest.getId(), future);
         }
-
+        // 放到最后执行,防止消息先收到,map中不存在数据
+        enhanceChannel.send(rpcRequest);
         return future;
     }
 
     @Override
     public void received(RES rpcResponse) {
         // 从中拿到请求的future进行回告通知
-        Promise<RES> promise = futureMap.remove(rpcResponse.getId());
-        promise.setSuccess(rpcResponse);
+        futureMap.remove(rpcResponse.getId()).setSuccess(rpcResponse);
     }
 }
