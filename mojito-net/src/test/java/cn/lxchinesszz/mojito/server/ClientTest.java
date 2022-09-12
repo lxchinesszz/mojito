@@ -1,6 +1,6 @@
 package cn.lxchinesszz.mojito.server;
 
-import cn.lxchinesszz.mojito.utils.NamedThreadFactory;
+import cn.lxchinesszz.mojito.net.utils.NamedThreadFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

@@ -1,11 +1,12 @@
 package cn.lxchinesszz.mojito.fluent;
 
-import cn.lxchinesszz.mojito.client.Client;
-import cn.lxchinesszz.mojito.future.MojitoFuture;
-import cn.lxchinesszz.mojito.future.listener.MojitoListener;
-import cn.lxchinesszz.mojito.protocol.mojito.model.RpcRequest;
-import cn.lxchinesszz.mojito.protocol.mojito.model.RpcResponse;
-import cn.lxchinesszz.mojito.server.Server;
+import cn.lxchinesszz.mojito.net.client.Client;
+import cn.lxchinesszz.mojito.net.fluent.Mojito;
+import cn.lxchinesszz.mojito.net.future.MojitoFuture;
+import cn.lxchinesszz.mojito.net.future.listener.MojitoListener;
+import cn.lxchinesszz.mojito.net.protocol.mojito.model.RpcRequest;
+import cn.lxchinesszz.mojito.net.protocol.mojito.model.RpcResponse;
+import cn.lxchinesszz.mojito.net.server.Server;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

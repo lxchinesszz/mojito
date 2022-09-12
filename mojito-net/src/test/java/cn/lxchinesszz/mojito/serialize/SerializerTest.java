@@ -1,7 +1,7 @@
 package cn.lxchinesszz.mojito.serialize;
 
-import cn.lxchinesszz.mojito.exception.SerializeException;
-import cn.lxchinesszz.mojito.serialize.impl.*;
+import cn.lxchinesszz.mojito.net.exception.SerializeException;
+import cn.lxchinesszz.mojito.net.serialize.impl.*;
 import cn.lxchinesszz.mojito.test.print.ColorConsole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,9 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;

@@ -1,6 +1,7 @@
 package cn.lxchinesszz.mojito.future;
 
-import cn.lxchinesszz.mojito.future.listener.MojitoListener;
+import cn.lxchinesszz.mojito.net.future.MojitoFuture;
+import cn.lxchinesszz.mojito.net.future.listener.MojitoListener;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,8 +10,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author liuxin

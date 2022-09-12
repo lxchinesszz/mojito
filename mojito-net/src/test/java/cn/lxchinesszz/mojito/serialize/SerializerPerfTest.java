@@ -1,6 +1,6 @@
 package cn.lxchinesszz.mojito.serialize;
 
-import cn.lxchinesszz.mojito.serialize.impl.*;
+import cn.lxchinesszz.mojito.net.serialize.impl.*;
 import com.github.houbb.junitperf.core.annotation.JunitPerfConfig;
 import com.github.houbb.junitperf.core.report.impl.HtmlReporter;
 import org.junit.jupiter.api.DisplayName;
