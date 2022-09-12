@@ -5,14 +5,12 @@ import cn.lxchinesszz.mojito.rpc.User;
 import cn.lxchinesszz.mojito.rpc.banlance.LoadBalance;
 import cn.lxchinesszz.mojito.rpc.banlance.impl.AverageLoadBalance;
 import cn.lxchinesszz.mojito.rpc.directory.ServerDiscover;
-import cn.lxchinesszz.mojito.rpc.directory.impl.LocalServerCenter;
+import cn.lxchinesszz.mojito.rpc.directory.impl.LocalServiceCenter;
 import cn.lxchinesszz.mojito.rpc.invoker.RpcInvocation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author liuxin
@@ -30,7 +28,7 @@ class FailoverClusterInvokerTest {
         // 负责均衡策略
         LoadBalance loadBalance = new AverageLoadBalance();
         // 服务发现,添加上监控的功能,一旦端口连接自己提出,当注册上来后,在增加
-        ServerDiscover serverDiscover = new LocalServerCenter<>(Arrays.asList(new Person() {
+        ServerDiscover serverDiscover = new LocalServiceCenter(Arrays.asList(new Person() {
             @Override
             public String getName() {
                 throw new RuntimeException();

@@ -31,7 +31,7 @@ public class RpcDispatchServer {
         Mojito.server(RpcInvocation.class, RpcResult.class).businessHandler(new BusinessHandler<RpcInvocation, RpcResult>() {
             @Override
             @SuppressWarnings("all")
-            public RpcResult handler(ChannelContext channelContext, RpcInvocation request) throws RemotingException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+            public RpcResult handler(ChannelContext channelContext, RpcInvocation request) throws RemotingException{
                 List<Invoker<Object>> list = serverDiscover.list(request);
                 return (RpcResult) list.get(0).invoke(request);
             }

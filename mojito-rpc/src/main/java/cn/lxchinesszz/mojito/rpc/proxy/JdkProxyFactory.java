@@ -77,7 +77,7 @@ public class JdkProxyFactory implements ProxyFactory {
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 RpcInvocation invocation = RpcInvocation.builder().
                         interfaceType(invoker.getInterface()).arguments(args).methodName(method.getName()).build();
-                return invoker.invoke(invocation);
+                return invoker.invoke(invocation).getValue();
             }
         });
     }

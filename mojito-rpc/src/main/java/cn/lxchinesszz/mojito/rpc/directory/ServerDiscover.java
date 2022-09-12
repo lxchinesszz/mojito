@@ -11,7 +11,7 @@ import java.util.List;
  * @author liuxin
  * 2022/8/28 20:15
  */
-public interface ServerDiscover {
+public interface ServerDiscover{
 
     /**
      * 客户端通过接口,获取网络上所有可用的Invoker

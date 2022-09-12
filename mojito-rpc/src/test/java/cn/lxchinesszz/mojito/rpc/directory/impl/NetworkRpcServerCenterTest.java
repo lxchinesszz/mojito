@@ -22,8 +22,8 @@ class NetworkRpcServerCenterTest {
 
         // 如果只是客户端,这样就可以了。
         // RpcClient rpcClient = new RpcClient();
-        NetworkRpcServerCenter serverCenter =
-                new NetworkRpcServerCenter(Collections.singletonList(ServerNode.serverNode("127.0.0.1", 8080, 2)));
+        NetworkRpcServiceCenter serverCenter =
+                new NetworkRpcServiceCenter(Collections.singletonList(ServerNode.serverNode("127.0.0.1", 8080, 2)));
         serverCenter.registerInterface(Person.class);
 
         Person remoteProxy = serverCenter.getRemoteProxy(Person.class);

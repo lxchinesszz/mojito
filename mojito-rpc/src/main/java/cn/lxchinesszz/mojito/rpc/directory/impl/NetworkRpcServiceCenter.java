@@ -20,13 +20,13 @@ import java.util.List;
  * @author liuxin
  * 2022/9/11 19:19
  */
-public class NetworkRpcServerCenter extends AbstractRpcServerCenter {
+public class NetworkRpcServiceCenter extends AbstractRpcServiceCenter {
 
     private final List<ServerNode> serverNodes;
 
     private final ProxyFactory proxyFactory;
 
-    public NetworkRpcServerCenter(List<ServerNode> serverNodes) {
+    public NetworkRpcServiceCenter(List<ServerNode> serverNodes) {
         this.serverNodes = serverNodes;
         this.proxyFactory = new JdkProxyFactory();
     }
@@ -43,6 +43,7 @@ public class NetworkRpcServerCenter extends AbstractRpcServerCenter {
      */
     @SuppressWarnings("all")
     public <T> T getRemoteProxy(Class<T> interfaceType) {
+        // 根据配置,获取集群策略
         Invoker clusterInvoker = new FailFastClusterInvoker(new AverageLoadBalance(), this, interfaceType);
         return (T) proxyFactory.getRemoteProxy(clusterInvoker);
     }
@@ -52,6 +53,7 @@ public class NetworkRpcServerCenter extends AbstractRpcServerCenter {
      *
      * @param interfaceType 接口完整限定名
      */
+    @SuppressWarnings("all")
     public void registerInterface(Class<?> interfaceType) {
         for (ServerNode serverNode : getServerNodes()) {
             Client<RpcInvocation, RpcResult> client;
@@ -64,6 +66,5 @@ public class NetworkRpcServerCenter extends AbstractRpcServerCenter {
             doRegisterInvoker(interfaceType.toString(), (Invoker<Object>) remoteInvoker);
         }
     }
-
 
 }

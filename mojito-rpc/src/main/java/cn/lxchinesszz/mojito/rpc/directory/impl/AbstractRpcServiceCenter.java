@@ -1,11 +1,10 @@
 package cn.lxchinesszz.mojito.rpc.directory.impl;
 
-import cn.lxchinesszz.mojito.rpc.directory.ServerDiscover;
+import cn.lxchinesszz.mojito.rpc.directory.ServiceCenter;
 import cn.lxchinesszz.mojito.rpc.invoker.Invocation;
 import cn.lxchinesszz.mojito.rpc.invoker.Invoker;
-import cn.lxchinesszz.mojito.rpc.directory.DirectoryRegister;
+import cn.lxchinesszz.mojito.rpc.invoker.MojitoInvoker;
 import cn.lxchinesszz.mojito.rpc.utils.EnhanceStream;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author liuxin
  * 2022/9/7 21:57
  */
-public abstract class AbstractRpcServerCenter implements ServerDiscover, DirectoryRegister {
+public abstract class AbstractRpcServiceCenter implements ServiceCenter {
 
     private final Map<String, List<Invoker<Object>>> serverDiscoverMap = new ConcurrentHashMap<>();
 
@@ -52,5 +51,17 @@ public abstract class AbstractRpcServerCenter implements ServerDiscover, Directo
             serverDiscoverMap.put(interfaceType, invokers);
         }
         invokers.add(invoker);
+    }
+
+    @Override
+    public void registerService(Object service) {
+        if (service.getClass().isInterface()) {
+            doRegisterInvoker(service.getClass().toString(), new MojitoInvoker<>(service));
+        } else {
+            Class<?>[] interfaces = service.getClass().getInterfaces();
+            for (Class<?> anInterface : interfaces) {
+                doRegisterInvoker(anInterface.toString(), new MojitoInvoker<>(service));
+            }
+        }
     }
 }

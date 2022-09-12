@@ -46,7 +46,6 @@ public class NettySharableExchangeInboundHandler extends SimpleChannelInboundHan
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         DefaultEnhanceChannel channel = DefaultEnhanceChannel.getOrAddChannel(ctx.channel());
         try {
-            System.out.println(count.incrementAndGet());
             exchangeChannelHandler.connected(channel);
         } finally {
             //连接断开就移除
@@ -66,7 +65,6 @@ public class NettySharableExchangeInboundHandler extends SimpleChannelInboundHan
         DefaultEnhanceChannel channel = DefaultEnhanceChannel.getOrAddChannel(ctx.channel());
         try {
             exchangeChannelHandler.disconnected(channel);
-//            count.decrementAndGet();
         } finally {
             DefaultEnhanceChannel.removeChannelIfDisconnected(ctx.channel());
         }

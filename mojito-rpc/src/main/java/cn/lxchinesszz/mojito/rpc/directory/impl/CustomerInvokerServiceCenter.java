@@ -11,12 +11,12 @@ import java.util.List;
  * @author liuxin
  * 2022/9/9 21:16
  */
-public class CustomerInvokerServerCenter<T> extends AbstractRpcServerCenter {
+public class CustomerInvokerServiceCenter<T> extends AbstractRpcServiceCenter {
 
 
     private List<Invoker<T>> invokers;
 
-    public CustomerInvokerServerCenter(List<Invoker<T>> invokers) {
+    public CustomerInvokerServiceCenter(List<Invoker<T>> invokers) {
         this.invokers = invokers;
         EnhanceStream.safeForEach(invokers, this::registerInvoker);
     }

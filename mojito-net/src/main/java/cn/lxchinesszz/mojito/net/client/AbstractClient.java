@@ -1,5 +1,6 @@
 package cn.lxchinesszz.mojito.net.client;
 
+import cn.lxchinesszz.mojito.net.exception.RemoteConnectException;
 import cn.lxchinesszz.mojito.net.exception.RemotingException;
 import cn.lxchinesszz.mojito.net.future.MojitoFuture;
 import cn.lxchinesszz.mojito.net.protocol.Protocol;
@@ -48,7 +49,7 @@ public abstract class AbstractClient<REQ extends ProtocolHeader, RES extends Pro
             }
         } catch (Throwable t) {
             running.compareAndSet(true, false);
-            throw new RemotingException("服务ip: " + host + ",port:" + port + ",连接异常", t);
+            throw new RemoteConnectException("服务ip: " + host + ",port:" + port + ",连接异常", t);
         }
     }
 

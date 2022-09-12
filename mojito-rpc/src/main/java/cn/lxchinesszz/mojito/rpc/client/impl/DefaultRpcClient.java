@@ -26,7 +26,7 @@ public class DefaultRpcClient implements RpcClient {
     @Override
     @SuppressWarnings("all")
     public <T> T getObject(Class<T> interfaceType) {
-        Invoker<T> clusterInvoker = new FailFastClusterInvoker(new AverageLoadBalance(), this.serverDiscover,interfaceType);
+        Invoker<T> clusterInvoker = new FailFastClusterInvoker(new AverageLoadBalance(), this.serverDiscover, interfaceType);
         return (T) proxyFactory.getRemoteProxy(clusterInvoker);
     }
 }

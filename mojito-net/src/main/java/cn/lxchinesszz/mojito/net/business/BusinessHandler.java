@@ -22,6 +22,6 @@ public interface BusinessHandler<REQ extends ProtocolHeader, RES extends Protoco
      * @param request        请求信息
      * @return R
      */
-    RES handler(ChannelContext channelContext, REQ request) throws RemotingException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
+    RES handler(ChannelContext channelContext, REQ request) throws RemotingException;
 
 }

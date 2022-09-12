@@ -150,7 +150,7 @@ public class ServerTest {
     public void createServer() {
         Protocol<RpcRequest, RpcResponse> protocol = new MojitoProtocol(new BusinessHandler<RpcRequest, RpcResponse>() {
             @Override
-            public RpcResponse handler(ChannelContext channelContext, RpcRequest request) throws RemotingException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+            public RpcResponse handler(ChannelContext channelContext, RpcRequest request) throws RemotingException {
                 return new RpcResponse();
             }
         });

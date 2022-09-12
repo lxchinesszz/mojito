@@ -7,7 +7,7 @@ import cn.lxchinesszz.mojito.rpc.invoker.Invoker;
  * @author liuxin
  * 2022/8/28 20:10
  */
-public interface DirectoryRegister {
+public interface ServiceRegister {
 
     /**
      * 服务端将接口注册到这里

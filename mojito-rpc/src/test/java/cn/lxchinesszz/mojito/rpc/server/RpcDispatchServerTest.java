@@ -3,20 +3,15 @@ package cn.lxchinesszz.mojito.rpc.server;
 import cn.lxchinesszz.mojito.net.client.Client;
 import cn.lxchinesszz.mojito.net.fluent.Mojito;
 import cn.lxchinesszz.mojito.rpc.Person;
-import cn.lxchinesszz.mojito.rpc.User;
 import cn.lxchinesszz.mojito.rpc.banlance.LoadBalance;
-import cn.lxchinesszz.mojito.rpc.banlance.impl.AverageLoadBalance;
 import cn.lxchinesszz.mojito.rpc.banlance.impl.RandomLoadBalance;
 import cn.lxchinesszz.mojito.rpc.directory.ServerDiscover;
-import cn.lxchinesszz.mojito.rpc.directory.impl.CustomerInvokerServerCenter;
-import cn.lxchinesszz.mojito.rpc.directory.impl.LocalServerCenter;
+import cn.lxchinesszz.mojito.rpc.directory.impl.CustomerInvokerServiceCenter;
 import cn.lxchinesszz.mojito.rpc.invoker.*;
 import cn.lxchinesszz.mojito.rpc.invoker.cluster.FailFastClusterInvoker;
-import cn.lxchinesszz.mojito.rpc.invoker.cluster.FailoverClusterInvoker;
 import cn.lxchinesszz.mojito.rpc.proxy.JdkProxyFactory;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -37,7 +32,7 @@ class RpcDispatchServerTest {
         // 负责均衡策略
         LoadBalance loadBalance = new RandomLoadBalance();
         // 服务发现,添加上监控的功能,一旦端口连接自己提出,当注册上来后,在增加
-        ServerDiscover serverDiscover = new CustomerInvokerServerCenter<>(Collections.singletonList(new MojitoInvoker<Person>(remoteProxy)));
+        ServerDiscover serverDiscover = new CustomerInvokerServiceCenter<>(Collections.singletonList(new MojitoInvoker<Person>(remoteProxy)));
 
         RpcDispatchServer rpcDispatchServer = new RpcDispatchServer(serverDiscover);
         rpcDispatchServer.start(8080);

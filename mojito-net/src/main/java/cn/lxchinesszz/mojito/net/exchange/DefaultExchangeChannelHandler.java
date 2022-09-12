@@ -30,7 +30,6 @@ public class DefaultExchangeChannelHandler extends AbstractExchangeChannelHandle
 
     @Override
     public void connected(EnhanceChannel channel) throws RemotingException {
-        System.out.println("建立连接");
     }
 
     @Override
@@ -77,7 +76,6 @@ public class DefaultExchangeChannelHandler extends AbstractExchangeChannelHandle
 
     @Override
     public void disconnected(EnhanceChannel channel) throws RemotingException {
-        System.out.println("连接关闭");
     }
 
 }
